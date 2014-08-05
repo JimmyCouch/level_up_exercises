@@ -1,0 +1,33 @@
+#leader, #loser, #results {
+	padding-top: 50px;
+}
+
+
+.pie_chart_container {
+	text-align:center;
+	margin: 0 auto;
+}
+
+
+.leader-results, .loser-results, .total-results {
+	text-align:center;
+}
+
+
+.vcenter {
+    display: inline-block;
+    vertical-align: middle;
+    float: none !important;
+}
+
+.list-group-item {
+	text-align: left;
+}
+
+.leader-body h3 {
+	margin-top: 10px; 
+}
+
+.badge {
+	background-color: rgb(124, 181, 236) !important;
+}
