@@ -38,94 +38,75 @@ describe 'when first booting the bomb', :type => :feature do
 end
 
 
+describe 'when inputting non-numeric values', :type => :feature do 
 
-describe 'when activating the bomb', :type => :feature do
+	it "the result should be invalid" do
+		visit '/'
+		fill_in 'Activation Code', :with => "ABCD"
+		click_button 'Activate'
+		expect(page).to have_content 'Error:'	
+	end
+
+end
+
+describe 'when inputting numeric values', :type => :feature do 
 
 	before(:each) do
 		visit '/'
-		click_button('Activate')
+		fill_in 'Activation Code', :with => "1234"
+		click_button 'Activate'
 	end
 
-	describe 'when inputting non-numeric values', :type => :feature do 
-
-		it "the result should be invalid" do
-			fill_in 'Activation Code', :with => "ABCD"
-			click_button 'Activate'
-			expect(page).to have_content 'Error'	
-		end
-
+	it "result is successful" do
+		expect(page).to have_content 'Success: '
 	end
 
-	describe 'when inputting numeric values', :type => :feature do 
-
-		before(:each) do
-			fill_in 'Activation Code', :with => "1234"
-			click_button 'Activate'
-		end
-
-		it "result is successful" do
-			expect(page).to have_content 'Sucess'
-		end
-
-		it "the bomb should be active" do
-			expect(page.find("#bomb-state")).to have_content("Activated")
-		end
-
-		it "re-entering the code should have no effect" do 
-			fill_in 'Activation Code', :with => "1234"
-			click_button 'Activate'
-		end
-
+	it "the bomb should be active" do
+		expect(page.find("#bomb-state")).to have_content("Activated")
 	end
-
 
 end
 
 
-describe 'when deactivating the bomb', :type => :feature do
+describe 'when deactivating the bomb', :type => :feature do 
 
 	before(:each) do
 		visit '/'
-
+		fill_in 'Activation Code', :with => "1234"
+		click_button 'Activate'
 	end
 
-	describe 'when deactivating the bomb incorrectly', :type => :feature do 
-
-		it "the result is unsuccessful when non-numeric values are entered" do
-			fill_in 'Deactivation Code', :with => "ABCD"
-			click_button 'Deactivate'
-			expect(page).to have_content("Error")
-		end
-
-		it 'the bomb should explode on 3 unsuccessful attempts' do
-			fill_in 'Deactivation Code', :with => "ABCD"
-			click_button 'Deactivate'
-			fill_in 'Deactivation Code', :with => "ABCD"
-			click_button 'Deactivate'
-			fill_in 'Deactivation Code', :with => "ABCD"
-			click_button 'Deactivate'
-
-			expect(page).to have_content "EXPODE"
-		end
-
+	it "the result is unsuccessful when non-numeric values are entered" do
+		fill_in 'Deactivation Code', :with => "ABCD"
+		click_button 'Deactivate'
+		expect(page).to have_content("Error:")
 	end
 
-	describe 'when deactivating the bomb correctly', :type => :feature do
+	it 'the bomb should explode on 3 unsuccessful attempts' do
+		fill_in 'Deactivation Code', :with => "ABCD"
+		click_button 'Deactivate'
+		fill_in 'Deactivation Code', :with => "ABCD"
+		click_button 'Deactivate'
+		fill_in 'Deactivation Code', :with => "ABCD"
+		click_button 'Deactivate'
 
-		before(:each) do
-			visit '/'
-			fill_in 'Deactivation Code', :with => "0000"
-			click_button 'Deactivate'
-		end
+		expect(page).to have_content "EXPLODE"
+	end
 
-		it "the result is successful" do
-			expect(page).to have_content 'Sucess'
-		end
+end
 
-		it "the bomb should be inactive" do
-			expect(page.find("#bomb-state")).to have_content("Inactive")		
-		end
+describe 'when deactivating the bomb correctly', :type => :feature do
 
+	before(:each) do
+		visit '/'
+		fill_in 'Activation Code', :with => "1234"
+		click_button 'Activate'
+		fill_in 'Deactivation Code', :with => "0000"
+		click_button 'Deactivate'
+	end
+
+	it "the bomb should be inactive" do
+		expect(page.find("#bomb-state")).to have_content("Inactive")		
 	end
 
 end

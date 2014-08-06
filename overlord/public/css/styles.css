@@ -1,5 +1,13 @@
+@import url(http://fonts.googleapis.com/css?family=Orbitron:400,700);
+
+
+body {
+	padding-top: 20px;
+}
+
+
 .body-section {
-	padding-top: 100px;
+	padding-top: 50px;
 }
 
 .form-body {
@@ -40,7 +48,7 @@
 #form-field {
   padding-left:35px;
   padding-right:35px;
-  padding-top:40px;
+  padding-top:30px;
   padding-bottom:50px;
   /*width: 450px;*/
   left: 50%;
@@ -151,3 +159,101 @@ input:focus, textarea:focus {
 	border: 1px solid transparent;
 	border-radius: 4px;
 }
+
+
+.alert-container {
+
+	height: 80px;
+
+}
+
+
+.explode-background {
+	height: 100%;
+	background: url('http://gifs.gifbin.com/052011/1307032252_atomic_bomb_mushroom_cloud_explosion.gif');
+}
+
+
+#bomb-timer {
+	font-family: 'Orbitron', sans-serif;
+	font-size: 50px;
+	color: white;
+	background-color: black;
+	border: 5px solid black;
+	border-radius: 20px;
+	width: 500px;
+}
+
+
+#battery {
+	height: 10%;
+	width: 10%;
+}
+
+div.line{
+  transform-origin: 0 100%;
+  height: 3px; /* Line width of 3 */
+  background: #000; /* Black fill */
+}
+
+#myCanvas {
+	/*height: 100%;
+	width: 100%;*/
+	padding-bottom: 50px;
+}
+
+
+.canvas-container
+{
+  position: relative;
+}
+
+.canvas-buttons
+{
+  position: absolute;
+  
+  width: 100%;
+}
+
+#left-button {
+  position: absolute;
+
+	bottom: 200px;
+	left: 10px;
+}
+
+#right-button {
+  position: absolute;
+
+	bottom: 200px;
+	right: 10px;
+}
+
+
+
+@-webkit-keyframes flash {
+    0% {
+        background-color: Yellow;
+        opacity:1;
+    }
+    22% {
+        background-color: Yellow;
+    }
+    77% {
+        background-color: Red;
+    }
+    100% {
+        background-color: #777;
+    }
+}
+    
+.flash {
+    -webkit-animation-name: flash;
+    -webkit-animation-duration: 900ms;
+    -webkit-animation-iteration-count: 1;
+    -webkit-animation-timing-function: ease-in-out;
+}    
+
+
+
+

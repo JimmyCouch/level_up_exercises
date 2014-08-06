@@ -1,17 +1,45 @@
 
-<div class="row body-section">
+<div class="row body-section bomb-active">
+	<div class="container alert-container">
+	    <%= erb :messages %> 
+	</div>
 	<div class="container form-body list-group-item">
-		<h3>Bomb Status: <span id="bomb-state" class="alert alert-danger" ><%= @bomb_status %></span></h3>
+		<h3>Bomb Status: <span id="bomb-state" class="alert alert-danger" >Activated</span></h3>
 		<hr>
 
 		<div id="form-field" class="row text-center">
-            
-            <form name="input" action="/submit-activation-form" method="post">
-            	<input type="text" name="code" id="activation-code"class="feedback-input vcenter" placeholder="Activation Code">
-            	<hr>
-            	<input type="submit" value="Activate" id="bomb-activate" class="vcenter button-blue">
-            </form>
+
+			<div class="col-lg-6">
+				<div class="row">
+					<p id="hidden-timer" style="display:none;"><%= session[:bomb_timer]%><p>
+					<div id="bomb-timer" class="vcenter" ></div>
+				</div>
+				<div class="row">
+					<div class="canvas-container vcenter">
+						<canvas id="myCanvas" class="vcenter" style="width:500px;">
+						</canvas>
+						<div class="canvas-buttons">
+							<a href="/cut-wire"><button id="right-button" type="button" class="btn btn-default">Cut!</button></a>
+							<a href="/cut-wire"><button id="left-button" type="button" class="btn btn-default">Cut!</button></a>
+						</div>
+					</div>
+
+				</div>
+			</div>
+			<div class="col-lg-6">
+	            <form name="input" action="/submit-deactivation-form" method="post">
+	            	<input type="text" name="code" id="deactivation-code"class="feedback-input vcenter" placeholder="Deactivation Code">
+	            	<input id="form-timer" type="text" style="display:none;" name="timer">
+	            	<hr>
+	            	<input type="submit" value="Deactivate" id="bomb-deactivate" class="vcenter button-blue">
+	            </form>
+            </div>
 			
 		</div>
 	</div>
 </div>
+<img src="/img/battery.jpg" id="battery" style="display:none;"></img>
+
+
+
+
