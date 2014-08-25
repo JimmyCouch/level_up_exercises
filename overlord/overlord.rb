@@ -8,6 +8,7 @@ class Overlord < Sinatra::Base
 	use Rack::Session::Pool, :expire_after => 2592000
 	use Rack::Flash
 
+
 	get '/' do
 		session[:bomb_status] ||= false
 		session[:bomb_deactivation_count] ||= 0
@@ -24,7 +25,7 @@ class Overlord < Sinatra::Base
 			session[:bomb_status] = false
 			flash[:success] ="Success: You got lucky!"
 		else
-			explode_this_bitch
+			explode
 		end	
 		redirect('/')
 	end
@@ -57,14 +58,14 @@ class Overlord < Sinatra::Base
 			flash[:success] ="Success: The bomb has been deactivated"
 	    else
 	    	if (session[:bomb_deactivation_count] += 1) >= 3
-	    		explode_this_bitch
+	    		explode
 	    	end
 			flash[:danger] ="Error: Incorrect input, only #{3 - session[:bomb_deactivation_count]} attempts left"
 	    end
 	    redirect '/'
 	end
 
-	def explode_this_bitch
+	def explode
 		session[:is_exploded] = true
 		session[:bomb_status] = false
 		redirect ('/explode')

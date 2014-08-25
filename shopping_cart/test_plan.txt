@@ -1,0 +1,167 @@
+Happy path - testing for a desired outcome (user logs in w/ correct user/pass)
+Sad path - testing to prevent an undesired outcome given probable input (user enters incorrect email in form)
+Bad path - testing to prevent an undesired outcome given improbable input (user enters jibberish for email in form)
+
+
+
+
+Feature: adding items to the cart
+  In order to fill a shopping cart
+  As a customer
+  I want to be able to click on items to be added to the shopping cart
+
+  Scenario: adding a sold-out item (sad path)
+    Given I visit the product page
+    And I press 'Sold out item'
+    Then I should see 'Error: this item is sold-out'
+
+  Scenario: adding a valid item (happy path)
+    Given I visit the product page
+    And I press "Add to cart"
+    Then I should see 'Success: your item was added to the shopping cart'
+
+  Scenario: adding a valid item that has already been added (happy path)
+    Given I visit the product page for "Product X"
+    And I press "Add to cart"
+    And then I visit the product page for "Product X"
+    Then I should see 'You have already added this item, please update the quanity'
+
+
+Feature: removing items from the cart
+  In order to remove items from the shopping cart
+  As a customer
+  I want to be able to click remove on select items to have them removed from the shopping cart
+
+  Scenario: removing an item (sad path)
+    Given I visit the shopping cart page
+    When I go to "Product X"
+    And I press "Remove"
+    Then I should not see "Product X" in the shopping cart
+
+  Scenario: removing an item (happy path)
+    Given I visit the shopping cart page
+    When I go to "Product Y"
+    And I press "Remove"
+    Then I should see 'Success: your item was removed from the shopping cart'
+
+Feature: changing item quantities
+  In order to change quantities from the shopping cart
+  As a customer
+  I want to be able to click on the number field on select items and update the quanity accordingly
+
+  Scenario: editing an item (bad path)
+    Given I visit the shopping cart page
+    When I go to "Product X"
+    And I enter "ABC" for "Quanity"
+    Then I should see "Error: not a valid input"
+
+  Scenario: editing an item (sad path)
+    Given I visit the shopping cart page
+    When I go to "Product Y"
+    And I enter "1000000" for "Quanity"
+    Then I should see 'Error: there are not sufficient items in stock for such quanity'
+
+  Scenario: editing an item (happy path)
+    Given I visit the shopping cart page
+    When I go to "Product Z"
+    And I enter "2" for "Quanity"
+    Then I should see 'Success: Your quanity has been updated to 2 items of Product Z'
+
+Feature: clicking on individual cart items
+  In order to view details about a shopping cart item
+  As a customer
+  I want to be able to click on an item and be redirected to its product page
+
+  Scenario: click on an item (bad path)
+    Given I visit the shopping cart page
+    When I click on "Product X"
+    Then I should not see "Product Y details"
+
+  Scenario: click on an item (sad path)
+    Given I visit the shopping cart page
+    When I click on to "Product Y"
+    Then I should not see 'Shopping Cart details'
+
+  Scenario: click on an item (happy path)
+    Given I visit the shopping cart page
+    When I click on to "Product Z"
+    Then I should see 'Product Z details'
+
+
+Feature: getting shipping estimates
+  In order to view the cost of shipping
+  As a customer
+  I want to be able to enter my shipping information and see an estimated result
+
+  Scenario: entering jibberish for the shipping information (bad path)
+    Given I visit the shopping cart page
+    And I enter "-/-/-**" for the "Address" form
+    Then I should see "Error incorrect format"
+
+  Scenario: entering a non-existant address (sad path)
+    Given I visit the shopping cart page
+    And I enter "8989 asdkljasdlajs rd. chicago, IL" for the "Address" form
+    Then I should see "Error, could not find that address"
+
+  Scenario: entering an existing address (happy path)
+    Given I visit the shopping cart page
+    And I enter "200 W. Jackson st, chicago IL" for the "Address" form
+    Then I should see "The estimated shipping amount is: "
+
+Feature: adding coupons
+  In order to recuce the price of my shopping cart
+  As a customer
+  I want to be able to enter a coupon code on the shopping cart page
+
+  Scenario: entering jibberish for the coupond code (bad path)
+    Given I visit the shopping cart page
+    And I enter "-/-/-**" for the "Coupon" form
+    Then I should see "Error incorrect format"
+
+  Scenario: entering an expired coupon (sad path)
+    Given I visit the shopping cart page
+    And I enter "EXPIRED-COUPON" for the "Coupon" form
+    Then I should see "Error, expired coupon"
+
+  Scenario: entering a valid coupon (happy path)
+    Given I visit the shopping cart page
+    And I enter "VALID-COUPON" for the "Coupon" form
+    Then I should see "Success: Your total is now: "
+
+Feature: logging in 
+  In order to log in to my account
+  As a customer
+  I want to be able to enter my log in information and have my shopping cart transfer over
+
+  Scenario: loggin in with an existing shopping cart (sad path)
+    Given I am not logged in
+    And I add "Product X" to my shopping cart
+    And I visit the log-in page
+    And I enter "email@email.com" for the "email" input and "password" for the password input
+    Then I should see "Your shopping cart has Product X in it"
+
+  Scenario: entering an existing address (happy path)
+    Given I am not logged in
+    And I visit the log-in page
+    And I enter "email@email.com" for the "email" input and "password" for the password input
+    Then I should see "Your shopping cart is empty"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -65,12 +65,6 @@ $(function () {
 		$("#form-timer").val($("#bomb-timer").text())
 	})
 
-
-
-
-
-
-
 });
 
 

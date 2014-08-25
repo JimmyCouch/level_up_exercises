@@ -1,6 +1,6 @@
 $(document).ready(function(){
-    animateDiv();
-    
+    animateExplode();
+    animatePic();
 });
 
 function makeNewPosition(){
@@ -15,10 +15,16 @@ function makeNewPosition(){
     
 }
 
-function animateDiv(){
+function animateExplode(){
     var newq = makeNewPosition();
     $('.explode').animate({ top: newq[0], left: newq[1] }, function(){
-      animateDiv();        
+      animateExplode();        
     });
-    
 };
+
+function animatePic() {
+    var newq = makeNewPosition();
+    $('.explode_pic').animate({ top: newq[0], left: newq[1] }, function(){
+      animatePic();        
+    });
+}
